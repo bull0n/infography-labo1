@@ -41,7 +41,12 @@
 		varying float vCy;
 		varying float vWidth;
 
-		void main(void)
+		float line(in float a, in float x, in float b)
+		{
+			return a * x + b;
+		}
+
+		void hexagon1()
 		{
 			vec2 center = vec2(vCx, vCy);
 			float fRaduis = vRadius;
@@ -66,6 +71,49 @@
 			{
 				gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
 			}
+		}
+
+		void hexagon2()
+		{
+			vec2 center = vec2(vCx, vCy);
+			float HALF_WIDTH = vWidth / 2.0;
+			float flatLimit = sin(radians(30.0)) * vRadius;
+			float height = cos(radians(30.0)) * vRadius;
+			float y = 2.0;
+			float s = sign(pos.x);
+
+			// Calcule la valeur Y qu'on devrait obtenir
+			// Cas 1: ligne horizontale
+			if(abs(pos.x) >= 0.0 && abs(pos.x) <= flatLimit)
+			{
+				y = line(0.0, pos.x, height);
+			}
+			// Cas 2: ligne de biais
+			else if(abs(pos.x) > flatLimit && abs(pos.x) <= vRadius)
+			{
+				// Le signe permet de déterminer si notre x est à gauche ou à droite
+				// dans le système de coordonnée et donc de pouvoir définir la position
+				// et l'angle de notre segment
+				float deltaX = s * (vRadius-flatLimit);
+				y = line((-height/deltaX), pos.x - s * vRadius, 0.0);
+			}
+
+			// Si la position y calculée correspond à celui du pixel courant
+			// on affiche du blanc
+			if(abs(pos.y) >= y - HALF_WIDTH && abs(pos.y) <= y + HALF_WIDTH)
+			{
+				gl_FragColor = vec4(1., 1., 1., 1.0);
+			}
+			else
+			{
+				gl_FragColor = vec4(0., 0., 0., 1.0);
+			}
+		}
+
+		void main(void)
+		{
+			hexagon1(); // Lucas
+			//hexagon2(); // Malik
 		}
 	</script>
 

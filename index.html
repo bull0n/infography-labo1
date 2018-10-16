@@ -77,30 +77,35 @@
 		{
 			vec2 center = vec2(vCx, vCy);
 			float HALF_WIDTH = vWidth / 2.0;
-			float flatLimit = sin(radians(30.0)) * vRadius;
+
+			float width = sin(radians(30.0)) * vRadius;
 			float height = cos(radians(30.0)) * vRadius;
 			float y = 2.0;
-			float s = sign(pos.x);
+
+			// Permet de déplacer le centre de l'hexagone sur le carré
+			float px = pos.x - center.x;
+			float py = pos.y - center.y;
+			float s = sign(px);
 
 			// Calcule la valeur Y qu'on devrait obtenir
 			// Cas 1: ligne horizontale
-			if(abs(pos.x) >= 0.0 && abs(pos.x) <= flatLimit)
+			if(abs(px) >= 0.0 && abs(px) <= width)
 			{
-				y = line(0.0, pos.x, height);
+				y = line(0.0, px, height);
 			}
 			// Cas 2: ligne de biais
-			else if(abs(pos.x) > flatLimit && abs(pos.x) <= vRadius)
+			else if(abs(px) > width && abs(px) <= vRadius)
 			{
 				// Le signe permet de déterminer si notre x est à gauche ou à droite
 				// dans le système de coordonnée et donc de pouvoir définir la position
 				// et l'angle de notre segment
-				float deltaX = s * (vRadius-flatLimit);
-				y = line((-height/deltaX), pos.x - s * vRadius, 0.0);
+				float deltaX = s * (vRadius-width);
+				y = line((-height/deltaX), px - s * vRadius, 0.0);
 			}
 
 			// Si la position y calculée correspond à celui du pixel courant
 			// on affiche du blanc
-			if(abs(pos.y) >= y - HALF_WIDTH && abs(pos.y) <= y + HALF_WIDTH)
+			if(abs(py) >= y - HALF_WIDTH && abs(py) <= y + HALF_WIDTH)
 			{
 				gl_FragColor = vec4(1., 1., 1., 1.0);
 			}

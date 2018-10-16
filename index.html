@@ -80,7 +80,7 @@
 
 			float width = sin(radians(30.0)) * vRadius;
 			float height = cos(radians(30.0)) * vRadius;
-			float y = 2.0;
+			float y = 10.0;
 
 			// Permet de déplacer le centre de l'hexagone sur le carré
 			float px = pos.x - center.x;
@@ -94,7 +94,7 @@
 				y = line(0.0, px, height);
 			}
 			// Cas 2: ligne de biais
-			else if(abs(px) > width && abs(px) <= vRadius)
+			else if(abs(px) > width && abs(px) <= vRadius + HALF_WIDTH)
 			{
 				// Le signe permet de déterminer si notre x est à gauche ou à droite
 				// dans le système de coordonnée et donc de pouvoir définir la position

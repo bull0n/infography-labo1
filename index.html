@@ -78,33 +78,49 @@
 			vec2 center = vec2(vCx, vCy);
 			float HALF_WIDTH = vWidth / 2.0;
 
-			float width = sin(radians(30.0)) * vRadius;
-			float height = cos(radians(30.0)) * vRadius;
+			/*
+			Représente le coté haut droit de l'hexagon (un quart de l'hexagon)
+		 	En jouant avec les valeurs absolus et les signes, on peut faire des symétries
+			fFW : flatFunctionWidth
+			fFH : flatFunctionHeight
+			^
+			¦
+			¦____fFW___+
+			¦				\
+			fFH			 \
+			¦				  \
+			¦--------------+-------->
+
+			vWidth = épaisseur du trait obtenu via le slider coté JS
+			*/
+			float flatFunctionWidth = sin(radians(30.0)) * vRadius;
+			float flatFunctionHeight = cos(radians(30.0)) * vRadius;
 			float y = 10.0;
 
-			// Permet de déplacer le centre de l'hexagone sur le carré
+			// px et py: permet de déplacer l'origine de l'hexagone à la position cliquée avec la souris sur le canevas
 			float px = pos.x - center.x;
 			float py = pos.y - center.y;
 			float s = sign(px);
 
 			// Calcule la valeur Y qu'on devrait obtenir
 			// Cas 1: ligne horizontale
-			if(abs(px) >= 0.0 && abs(px) <= width)
+			if(abs(px) >= 0.0 && abs(px) <= flatFunctionWidth)
 			{
-				y = line(0.0, px, height);
+				y = line(0.0, px, flatFunctionHeight);
 			}
 			// Cas 2: ligne de biais
-			else if(abs(px) > width && abs(px) <= vRadius + HALF_WIDTH)
+			else if(abs(px) > flatFunctionWidth && abs(px) <= vRadius + HALF_WIDTH)
 			{
 				// Le signe permet de déterminer si notre x est à gauche ou à droite
 				// dans le système de coordonnée et donc de pouvoir définir la position
 				// et l'angle de notre segment
-				float deltaX = s * (vRadius-width);
-				y = line((-height/deltaX), px - s * vRadius, 0.0);
+				float deltaX = s * (vRadius-flatFunctionWidth);
+				y = line((-flatFunctionHeight/deltaX), px - s * vRadius, 0.0);
 			}
 
 			// Si la position y calculée correspond à celui du pixel courant
 			// on affiche du blanc
+			// On prend en compte le largeur du trait avec +- la moitié de la largeur
 			if(abs(py) >= y - HALF_WIDTH && abs(py) <= y + HALF_WIDTH)
 			{
 				gl_FragColor = vec4(1., 1., 1., 1.0);

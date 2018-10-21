@@ -126,7 +126,7 @@
 		var centerX = 0.0;
 		var centerY = 0.0;
 		var circleRadius = 0.5; // 50%
-		var cercleWidth = 0.02;
+		var circleWidth = 0.02;
 
 		var vertexBuffer=null;
 		var indexBuffer=null;
@@ -143,7 +143,7 @@
 			prg.radiusUniform = glContext.getUniformLocation(prg, "uRadius");
 			prg.centerXUniform = glContext.getUniformLocation(prg, "uCx");
 			prg.centerYUniform = glContext.getUniformLocation(prg, "uCy");
-			prg.cercleWidthUniform = glContext.getUniformLocation(prg, "uWidth");
+			prg.circleWidthUniform = glContext.getUniformLocation(prg, "uWidth");
 
 			prg.pMatrixUniform = glContext.getUniformLocation(prg, "uPMatrix");
 			prg.mvMatrixUniform = glContext.getUniformLocation(prg, "uMVMatrix");
@@ -182,7 +182,7 @@
 				glContext.uniform1f(prg.radiusUniform, circleRadius);
 				glContext.uniform1f(prg.centerXUniform, centerX);
 				glContext.uniform1f(prg.centerYUniform, centerY);
-				glContext.uniform1f(prg.cercleWidthUniform, cercleWidth);
+				glContext.uniform1f(prg.circleWidthUniform, circleWidth);
 
 				glContext.bindBuffer(glContext.ARRAY_BUFFER, vertexBuffer);
 				glContext.vertexAttribPointer(prg.vertexPositionAttribute, 3, glContext.FLOAT, false, 0, 0);
@@ -203,14 +203,14 @@
 		{
 			circleRadius = document.getElementById("slider1").value / 100.0;
 
-			console.log(this.circleRadius);
+			console.log("radius: " + this.circleRadius);
 		}
 
 		function sliderWidthChanged()
 		{
-			cercleWidth = document.getElementById("slider2").value / 1000.0;
+			circleWidth = document.getElementById("slider2").value / 1000.0;
 
-			console.log(this.cercleWidth);
+			console.log("width: " + this.circleWidth);
 		}
 
 		</script>

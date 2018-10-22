@@ -46,33 +46,6 @@
 			return a * x + b;
 		}
 
-		void hexagon1()
-		{
-			vec2 center = vec2(vCx, vCy);
-			float fRaduis = vRadius;
-			float HALF_WIDTH = vWidth / 2.0;
-
-			float c = 0.5;
-			float slope = 4./3.;
-			float height = (sqrt(3.)/2.)*c;
-
-			bool cond1 = pos.y - slope*pos.x < c*slope + HALF_WIDTH &&  pos.y - slope*pos.x > c*slope - HALF_WIDTH /*&& pos.x < -b/2.*/; // f(x) = 4/3x + c -> 60° angle
-			bool cond2 = pos.y - slope*pos.x < -c*slope + HALF_WIDTH &&  pos.y - slope*pos.x > -c*slope - HALF_WIDTH; // f(x) = 4/3x - c
-			bool cond3 = pos.y + slope*pos.x < c*slope + HALF_WIDTH &&  pos.y + slope*pos.x > c*slope - HALF_WIDTH; // f(x) = -4/3x + c
-			bool cond4 = pos.y + slope*pos.x < -c*slope + HALF_WIDTH &&  pos.y + slope*pos.x > -c*slope - HALF_WIDTH; // f(x) = -4/3x - c
-			bool cond5 = pos.y < height + HALF_WIDTH &&  pos.y > height - HALF_WIDTH; // f(x) = height
-			bool cond6 = pos.y < -height + HALF_WIDTH &&  pos.y > -height - HALF_WIDTH; // f(x) = -height
-
-			if(cond1 || cond2 || cond3 || cond4 || cond5 || cond6)
-			{
-				gl_FragColor = vec4(1., 1., 1., 1.0);
-			}
-			else
-			{
-				gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-			}
-		}
-
 		void hexagon2()
 		{
 			vec2 center = vec2(vCx, vCy);
@@ -107,6 +80,18 @@
 			if(abs(px) >= 0.0 && abs(px) <= flatFunctionWidth)
 			{
 				y = line(0.0, px, flatFunctionHeight);
+
+				// Si la position y calculée correspond à celui du pixel courant
+				// on affiche du blanc
+				// On prend en compte le largeur du trait avec +- la moitié de la largeur
+				if(abs(py) >= y - HALF_WIDTH && abs(py) <= y + HALF_WIDTH)
+				{
+					gl_FragColor = vec4(1., 1., 1., 1.0);
+				}
+				else
+				{
+					gl_FragColor = vec4(0., 0., 0., 1.0);
+				}
 			}
 			// Cas 2: ligne de biais
 			else if(abs(px) > flatFunctionWidth && abs(px) <= vRadius + HALF_WIDTH)
@@ -116,23 +101,28 @@
 				// et l'angle de notre segment
 				float deltaX = s * (vRadius-flatFunctionWidth);
 				y = line((-flatFunctionHeight/deltaX), px - s * vRadius, 0.0);
-			}
 
-			// Si la position y calculée correspond à celui du pixel courant
-			// on affiche du blanc
-			// On prend en compte le largeur du trait avec +- la moitié de la largeur
-			if(abs(py) >= y - HALF_WIDTH && abs(py) <= y + HALF_WIDTH)
-			{
-				gl_FragColor = vec4(1., 1., 1., 1.0);
-			}
-			else if(false /*faire test avec la largeur*/)
-			{
-				gl_FragColor = vec4(1., 1., 1., 1.0);
+				//calcule pour avoir la largeur en horizontal
+				HALF_WIDTH = HALF_WIDTH / cos(radians(30.));
+
+				// Si la position y calculée correspond à celui du pixel courant
+				// on affiche du blanc
+				// On prend en compte le largeur du trait avec +- la moitié de la largeur
+				if(abs(py) >= y - HALF_WIDTH && abs(py) <= y + HALF_WIDTH)
+				{
+					gl_FragColor = vec4(1., 1., 1., 1.0);
+				}
+				else
+				{
+					gl_FragColor = vec4(0., 0., 0., 1.0);
+				}
 			}
 			else
 			{
 				gl_FragColor = vec4(0., 0., 0., 1.0);
 			}
+
+
 		}
 
 		void main(void)

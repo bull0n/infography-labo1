@@ -27,7 +27,7 @@
 			vCy = uCy;
 			vWidth = uWidth;
 
-			gl_Position=uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+			gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
 		}
 	</script>
 
@@ -46,7 +46,7 @@
 			return a * x + b;
 		}
 
-		void hexagon2()
+		void hexagon()
 		{
 			vec2 center = vec2(vCx, vCy);
 			float HALF_WIDTH = vWidth / 2.0;
@@ -121,14 +121,11 @@
 			{
 				gl_FragColor = vec4(0., 0., 0., 1.0);
 			}
-
-
 		}
 
 		void main(void)
 		{
-			//hexagon1(); // Lucas
-			hexagon2(); // Malik
+			hexagon();
 		}
 	</script>
 
@@ -211,14 +208,14 @@
 
 		function sliderRadiusChanged()
 		{
-			circleRadius = document.getElementById("slider1").value / 100.0;
+			circleRadius = document.getElementById("sliderRadius").value / 100.0;
 
 			console.log("radius: " + this.circleRadius);
 		}
 
 		function sliderWidthChanged()
 		{
-			circleWidth = document.getElementById("slider2").value / 1000.0;
+			circleWidth = document.getElementById("sliderWidth").value / 1000.0;
 
 			console.log("width: " + this.circleWidth);
 		}
@@ -230,14 +227,24 @@
 			displayTitle("WebGL - Labo. 1 : Un hexagone avec un seul carré", 1,1,1,1,1,1,1);
 		</script>
 
-		<br>Un hexagone avec un seul carré.
+		<br>Un hexagone avec un seul carré
 
-		<br><br>Rayon : <input id="slider1" value="49" min="0" max="100" oninput="sliderRadiusChanged();" type="range">
-		<br>Epaisseur : <input id="slider2" value="47" min="0" max="100" oninput="sliderWidthChanged();" type="range">
+		<br><br>Rayon : <input id="sliderRadius" value="49" min="0" max="100" oninput="sliderRadiusChanged();" type="range">
+		<br>Epaisseur : <input id="sliderWidth" value="47" min="0" max="100" oninput="sliderWidthChanged();" type="range">
 		<br>Centre : cliquer sur le canevas
 
 		<br><canvas id="webgl-canvas" width="500" height="500">HTML5 is not supported</canvas>
 
+		<h4>A propos</h4>
+
+		<p>Ce labo a été réalisé par l'équipe 3 composée de :</p>
+		<ul>
+			<li>Mme. Kim Aurore Biloni</li>
+			<li>M. Lucas Bulloni</li>
+			<li>M. Malik Fleury</li>
+		</ul>
+
+		<p>Il consiste à dessiner un hexagone.</p>
 
 	<script id="code-js" type="text/javascript">
 		var myCanvas = document.getElementById('webgl-canvas');

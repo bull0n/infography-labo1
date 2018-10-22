@@ -237,14 +237,37 @@
 
 		<h4>A propos</h4>
 
-		<p>Ce labo a été réalisé par l'équipe 3 composée de :</p>
+		<p>
+			Ce labo a été réalisé durant le semestre d'automne 2018 à la HE-Arc Ingénierie de Neuchâtel dans le cadre du cours d'infographie.
+			Il a été mené à bien par l'<b>équipe</b> 3 composée de :
+		</p>
 		<ul>
 			<li>Mme. Kim Aurore Biloni</li>
 			<li>M. Lucas Bulloni</li>
 			<li>M. Malik Fleury</li>
 		</ul>
 
-		<p>Il consiste à dessiner un hexagone.</p>
+		<p>
+			Le but est de dessiner un hexagone en n'utilisant que deux triangles.
+			A première vue, un hexagone est composée de 6 triangles et non deux mais. Pourtant, il existe une astuce pour y parvenir.
+			Cette dernière utilise en fait uniquement le fragment shader pour dessiner la forme dans la scène.
+		</p>
+		<p>
+			Les deux triangles composent en fait le fond de la scène ; ils forment un carré noir représentant le fond de la forme.
+			Ceci a pour effet que le vertex shader ne fait que gérer la caméra et indiquer comment sont partager les données entre les différents shader.
+			L'hexagone est donc dessiner uniquement dans le fragment shader!
+		</p>
+		<p>
+			L'hexagone est dessiné à l'aide de fonctions linéaire. Suivant le position du pixel courant, on va calculer quelle serait sa coordonées y.
+			S'il s'avère que la position est la même, on colorie le pixel en blanc. Sinon, en noir.
+			Pour gérér l'épaisseur du trait, on regarde si le pixel courant est entre deux valeurs.
+			Pour gérer la position de l'hexagone, on dessine le centre suivant le dernier point cliquer par l'utilisateur.
+		</p>
+		<br>
+		<p>
+			Labo1 : Hexagone avec un seul carré, Equipe 3 (Biloni, Bulloni, Fleury)
+			<br>Cours d'Infographie, HE-Arc Ingénierie, Neuchâtel, le 22.10.2018, 
+		</p>
 
 	<script id="code-js" type="text/javascript">
 		var myCanvas = document.getElementById('webgl-canvas');

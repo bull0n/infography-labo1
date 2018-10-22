@@ -68,7 +68,6 @@
 			*/
 			float flatFunctionWidth = sin(radians(30.0)) * vRadius;
 			float flatFunctionHeight = cos(radians(30.0)) * vRadius;
-			float y = 10.0;
 
 			// px et py: permet de déplacer l'origine de l'hexagone à la position cliquée avec la souris sur le canevas
 			float px = pos.x - center.x;
@@ -79,7 +78,7 @@
 			// Cas 1: ligne horizontale
 			if(abs(px) >= 0.0 && abs(px) <= flatFunctionWidth)
 			{
-				y = line(0.0, px, flatFunctionHeight);
+				float y = line(0.0, px, flatFunctionHeight);
 
 				// Si la position y calculée correspond à celui du pixel courant
 				// on affiche du blanc
@@ -100,7 +99,7 @@
 				// dans le système de coordonnée et donc de pouvoir définir la position
 				// et l'angle de notre segment
 				float deltaX = s * (vRadius-flatFunctionWidth);
-				y = line((-flatFunctionHeight/deltaX), px - s * vRadius, 0.0);
+				float y = line((-flatFunctionHeight/deltaX), px - s * vRadius, 0.0);
 
 				//calcule pour avoir la largeur en horizontal
 				HALF_WIDTH = HALF_WIDTH / cos(radians(30.));
@@ -260,8 +259,8 @@
 		<p>
 			L'hexagone est dessiné à l'aide de fonctions linéaires. Suivant la position du pixel courant, on va calculer quelle serait sa coordonnée y.
 			S'il s'avère que la position est la même, on colorie le pixel en blanc. Sinon, en noir.
-			Pour gérér l'épaisseur du trait, on regarde si le pixel courant est entre deux valeurs.
-			Pour gérer la position de l'hexagone, on dessine le centre suivant le dernier point cliquer par l'utilisateur.
+			Pour gérer l'épaisseur du trait, on regarde si le pixel courant est entre deux valeurs.
+			Pour gérer la position de l'hexagone, on dessine le centre suivant le dernier point cliqué par l'utilisateur.
 		</p>
 		<br>
 		<p>

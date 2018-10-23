@@ -234,12 +234,13 @@
 
 		<br><canvas id="webgl-canvas" width="500" height="500">HTML5 is not supported</canvas>
 
-		<h4>A propos</h4>
+		<h3>A propos</h3>
 
 		<p>
 			Ce labo a été réalisé durant le semestre d'automne 2018 à la HE-Arc Ingénierie de Neuchâtel dans le cadre du cours d'infographie.
-			Il a été mené à bien par l'<b>équipe</b> 3 composée de :
+			Il a été mené à bien par l'<b>équipe</b> 2 composée de :
 		</p>
+
 		<ul>
 			<li>Mme. Kim Aurore Biloni</li>
 			<li>M. Lucas Bulloni</li>
@@ -249,7 +250,7 @@
 		<p>
 			Le but est de dessiner un hexagone en n'utilisant que deux triangles.
 			A première vue, un hexagone est composé de 6 triangles et non deux mais, il existe une astuce pour y parvenir.
-			Cette dernière utilise en fait uniquement le fragment shader pour dessiner la forme dans la scène.
+			Cette dernière utilise en fait uniquement le fragment shader pour dessiner la forme sur le plan composé des deux triangles.
 		</p>
 		<p>
 			Les deux triangles composent en fait le fond de la scène ; ils forment un carré noir représentant le fond de la forme.
@@ -257,15 +258,28 @@
 			L'hexagone est donc dessiné uniquement dans le fragment shader!
 		</p>
 		<p>
-			L'hexagone est dessiné à l'aide de fonctions linéaires. Suivant la position du pixel courant, on va calculer quelle serait sa coordonnée y.
+			L'hexagone est dessiné à l'aide de fonctions linéaires. Suivant la position du pixel courant, On va ensuite calculer quelle serait sa coordonnée y.
 			S'il s'avère que la position est la même, on colorie le pixel en blanc. Sinon, en noir.
-			Pour gérer l'épaisseur du trait, on regarde si le pixel courant est entre deux valeurs.
+			Pour gérer l'épaisseur du trait, on regarde si le pixel courant est la valeur en y +/- la moitié de l'épaisseur.
+			Nous avons dû avoir recours à de la trigonométrie pour calculer la taille de bordure sur les droites avec une pente pour companser la taille de bordure qui était plus fine à cause de la pente.
 			Pour gérer la position de l'hexagone, on dessine le centre suivant le dernier point cliqué par l'utilisateur.
 		</p>
-		<br>
+
+		<p>
+			Les fonctions linéaires sont simplement une droite horizotale et une droite de pente de 60° qui composer un quart de l'hexagone.
+			Et nous les avons redessiné en les multiplié par -1 ou translater pour faire tous les côtés du triangles.
+			<br>
+			Il aurait été possible de faire qu'une seule fonction et pas de testes à l'aide de fourier qui permet de d'exprimer n'importe quelle fonction avec une somme de sinus et de cosinus, ce qui aurait nécessité une boucle.
+			<br>Mais nous avons trouvé cela plus simple de simplement faire une condition et deux droites.
+		</p>
+
+		<p>
+			Il aurait été possible de transformer la fonc
+		</p>
+
 		<p>
 			Labo1 : Hexagone avec un seul carré, Equipe 3 (Biloni, Bulloni, Fleury)
-			<br>Cours d'Infographie, HE-Arc Ingénierie, Neuchâtel, le 22.10.2018, 
+			<br>Cours d'Infographie, HE-Arc Ingénierie, Neuchâtel, le 22.10.2018,
 		</p>
 
 	<script id="code-js" type="text/javascript">
